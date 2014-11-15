@@ -8,6 +8,10 @@ namespace DomainModel.Models
 {
     public class SQLDbContext : DbContext
     {
+        public SQLDbContext()
+            : base("SQLDbContext")
+        { }
+
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<BankAccount> BankAccounts { get; set; }
     }

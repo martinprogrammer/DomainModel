@@ -1,4 +1,5 @@
 ﻿using DomainModel.AppService.Messages;
+using DomainModel.AppService.ViewModel;
 using DomainModel.Models;
 using DomainModel.Repository;
 using System;
@@ -49,7 +50,51 @@ namespace DomainModel.AppService
 
         public TransferResponse Transfer(TransferRequest request)
         {
+            TransferResponse response = new TransferResponse();
 
+            try
+            {
+                _bankAccountService.Transfer(request.AccountIdTo, request.AccountIdFrom, request.Amount);
+                response.Success = true;
+            }
+            catch(InsufficientFundsException)
+            {
+                response.Message = "There is not enough funds in account no: " + request.AccountIdFrom.ToString();
+                response.Success = false;
+            }
+
+            return response;
+        }
+
+        public FindAllBankAccountResponse GetAllBankAccounts()
+        {
+            FindAllBankAccountResponse FindAllBankAccountResponse = new FindAllBankAccountResponse();
+            IList<BankAccountView> bankAccountViews = new List<BankAccountView>();
+            FindAllBankAccountResponse.BankAccountView = bankAccountViews;
+            foreach(BankAccount acc in _bankRepository.FindAll())
+            {
+                bankAccountViews.Add(
+                    ViewMapper.CreateBankAccountViewFrom(acc));
+            }
+
+            return FindAllBankAccountResponse;
+        }
+
+        public FindBankAccountResponse GetBankAccountBy(Guid id)
+        {
+            FindBankAccountResponse bankAccountResponse = new FindBankAccountResponse();
+            BankAccount acc = _bankRepository.Find(id);
+            BankAccountView bankAccountView = ViewMapper.CreateBankAccountViewFrom(acc);
+
+            foreach(Transaction tran in acc.GetTransactions())
+            {
+                bankAccountView.Transactions.Add(
+                    ViewMapper.CreateTransactionViewFrom(tran));
+            }
+
+            bankAccountResponse.BankAccount = bankAccountView;
+
+            return bankAccountResponse;
         }
     }
 }
