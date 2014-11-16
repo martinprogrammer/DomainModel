@@ -82,19 +82,42 @@ namespace DomainModel.AppService
 
         public FindBankAccountResponse GetBankAccountBy(Guid id)
         {
+            // new FindBankAccountResponse object
             FindBankAccountResponse bankAccountResponse = new FindBankAccountResponse();
+
+            // return account from repository
             BankAccount acc = _bankRepository.Find(id);
+
+            // that account convert into BankAccountView
             BankAccountView bankAccountView = ViewMapper.CreateBankAccountViewFrom(acc);
 
+            // iterate through account GetTransactions()
             foreach(Transaction tran in acc.GetTransactions())
             {
+                // add transactions to BankAccountView
                 bankAccountView.Transactions.Add(
                     ViewMapper.CreateTransactionViewFrom(tran));
             }
 
+            // bankAccoiuntResponse.BankAccount = bankAccountView
             bankAccountResponse.BankAccount = bankAccountView;
 
             return bankAccountResponse;
+        }
+
+        public  BankAccountsDropdownView GetAccountsDropdown(string acc)
+        {
+            BankAccountsForDropdownResponse theResponse = new BankAccountsForDropdownResponse();
+            IEnumerable<BankAccount> accounts = _bankRepository.FindAll();
+
+            BankAccountsDropdownView theView = ViewMapper.CreateBankAccountDropdownViewFrom(accounts);
+
+            theResponse.bankAccounts = theView;
+
+            return theResponse.bankAccounts;
+
+
+            
         }
     }
 }

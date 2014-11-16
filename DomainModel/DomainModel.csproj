@@ -156,6 +156,8 @@
     <Compile Include="AppService\ApplicationBankAccountService.cs" />
     <Compile Include="AppService\Messages\BankAccountCreateRequest.cs" />
     <Compile Include="AppService\Messages\BankAccountCreateResponse.cs" />
+    <Compile Include="AppService\Messages\BankAccountsForDropdownRequest.cs" />
+    <Compile Include="AppService\Messages\BankAccountsForDropdownResponse.cs" />
     <Compile Include="AppService\Messages\DepositRequest.cs" />
     <Compile Include="AppService\Messages\FindAllBankAccountResponse.cs" />
     <Compile Include="AppService\Messages\FindBankAccountResponse.cs" />
@@ -163,6 +165,7 @@
     <Compile Include="AppService\Messages\TransferRequest.cs" />
     <Compile Include="AppService\Messages\TransferResponse.cs" />
     <Compile Include="AppService\Messages\WithdrawalRequest.cs" />
+    <Compile Include="AppService\ViewModel\BankAccountsDropdownView.cs" />
     <Compile Include="AppService\ViewModel\BankAccountView.cs" />
     <Compile Include="AppService\ViewModel\TransactionView.cs" />
     <Compile Include="AppService\ViewModel\ViewMapper.cs" />
@@ -255,6 +258,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\BankAccount\Index.cshtml" />
+    <Content Include="Views\BankAccount\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

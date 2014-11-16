@@ -1,0 +1,19 @@
+﻿@model DomainModel.AppService.ViewModel.BankAccountsDropdownView
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@Html.DropDownListFor(
+
+p=>p.selectedValue,
+   new SelectList(Model.bankAccounts, "Value", "Text", Model.bankAccounts.First().Text),
+   new { onchange = "RiskChange(this.value)", id = "ddBankAccounts" })
+  
+ <script>
+     function RiskChange(val) {
+         alert(val);
+     }
+ </script>
